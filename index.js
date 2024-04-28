@@ -64,15 +64,36 @@ async function run() {
             res.send(result)
         })
 
+        app.get('/addcraft/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await addCraftCollection.findOne(query)
+            res.send(result)
+        })
 
 
-        // app.patch('/addcraft', async (req, res) => {
-        //     const user = req.body
+        app.put('/addcraft/:id', async (req, res) => {
+            const id = req.params.id
+            const filter = { _id: new ObjectId(id) }
+            const options = { upsert: true }
+            const updatedItem = req.body;
+            const updated = {
+                $set: {
+                    itemName: updatedItem.itemName,
+                    subCategory: updatedItem.subCategory,
+                    image: updatedItem.image,
+                    shortDescription: updatedItem.shortDescription,
+                    price: updatedItem.price,
+                    rating: updatedItem.rating,
+                    customization: updatedItem.customization,
+                    processingTime: updatedItem.processingTime,
+                    stockStatus: updatedItem.stockStatus
+                }
+            }
+            const result = await addCraftCollection.updateOne(filter, updated, options)
 
-        //     const filter = { email: user.email }
-        //     const result = await addCraftCollection.find({ filter: filter })
-        //     res.send(result)
-        // })
+            res.send(result)
+        })
 
 
         // Send a ping to confirm a successful connection
