@@ -49,6 +49,23 @@ async function run() {
             const result = await addCraftCollection.find({ email: req.params.email }).toArray()
             res.send(result)
         })
+
+
+        app.get('/viewDetails/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const result = await addCraftCollection.findOne(query)
+            res.send(result)
+        })
+        app.delete('/addcraft/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await addCraftCollection.deleteOne(query)
+            res.send(result)
+        })
+
+
+
         // app.patch('/addcraft', async (req, res) => {
         //     const user = req.body
 
@@ -56,13 +73,7 @@ async function run() {
         //     const result = await addCraftCollection.find({ filter: filter })
         //     res.send(result)
         // })
-        //delete
-        // app.get('/addcraft/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     const query = { _id: new ObjectId(id) }
-        //     const result = await addCraftCollection.deleteOne(query)
-        //     res.send(result)
-        // })
+
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
