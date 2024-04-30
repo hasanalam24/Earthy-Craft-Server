@@ -42,8 +42,17 @@ async function run() {
         })
 
 
-        //mycardlist get
 
+        //subcategory
+        app.get('/subCategory/:catName', async (req, res) => {
+
+            const result = await addCraftCollection.find({
+                subCategory: req.params.catName
+            }).toArray()
+            res.send(result)
+        })
+
+        //mycardlist get
         app.get('/myCart/:email', async (req, res) => {
 
             const result = await addCraftCollection.find({ email: req.params.email }).toArray()
@@ -64,6 +73,7 @@ async function run() {
             res.send(result)
         })
 
+        //update er jonnno get
         app.get('/addcraft/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) }
@@ -71,7 +81,7 @@ async function run() {
             res.send(result)
         })
 
-
+        //update 
         app.put('/addcraft/:id', async (req, res) => {
             const id = req.params.id
             const filter = { _id: new ObjectId(id) }
